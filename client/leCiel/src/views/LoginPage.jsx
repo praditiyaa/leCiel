@@ -62,7 +62,7 @@ const LoginPage = () => {
         },
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
