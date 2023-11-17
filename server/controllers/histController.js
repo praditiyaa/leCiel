@@ -1,5 +1,4 @@
-const { User, History, ReadingList } = require('../models/index');
-const { animeList } = require('../api/axios');
+const { History } = require('../models/index');
 const { Op } = require('sequelize');
 
 class histController {

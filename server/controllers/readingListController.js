@@ -1,4 +1,4 @@
-const { User, History, ReadingList } = require('../models/index');
+const { ReadingList } = require('../models/index');
 const { Op } = require('sequelize');
 
 class readingList {

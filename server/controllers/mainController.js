@@ -1,6 +1,4 @@
-const { User, History, ReadingList } = require('../models/index');
 const { animeList, mangadex } = require('../api/axios');
-const { Op } = require('sequelize');
 
 class mainController {
   static async showAll(req, res, next) {
@@ -25,7 +23,6 @@ class mainController {
 
       res.status(200).json({ data, paging });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
