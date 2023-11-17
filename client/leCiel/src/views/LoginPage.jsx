@@ -34,7 +34,6 @@ const LoginPage = () => {
       navigate('/');
     } catch (err) {
       setError(err.response.data);
-      console.log(error);
     }
   };
 
@@ -59,7 +58,7 @@ const LoginPage = () => {
       await supabase.auth.signInWithOAuth({
         provider: 'twitter',
         options: {
-          redirectTo: 'http://localhost:8080/login',
+          redirectTo: 'https://le-ciel.vercel.app/login',
         },
       });
     } catch (err) {
@@ -70,8 +69,6 @@ const LoginPage = () => {
   const checkSession = async () => {
     try {
       let { data } = await supabase.auth.getSession();
-
-      console.log(data);
 
       setSession(data.session.user);
     } catch (err) {
