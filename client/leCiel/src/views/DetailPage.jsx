@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ModalCom from '../components/Modal';
 import server from '../api/axios';
 import Lottie from 'lottie-react';
+import Pill from '../components/Pill';
 
 const DetailPage = () => {
   const [loading, setLoading] = useState(false);
@@ -91,9 +92,10 @@ const DetailPage = () => {
                   </h2>
                 ))}
                 {genres.slice(0, 3).map((data) => (
-                  <h2 className='text-md font-semibold tracking-tight text-[#ffffff] w-fit'>
-                    {data.name}
-                  </h2>
+                  // <h2 className='text-md font-semibold tracking-tight text-[#ffffff] w-fit'>
+                  //   {data.name}
+                  // </h2>
+                  <Pill cat={data.name} />
                 ))}
               </div>
             </div>
