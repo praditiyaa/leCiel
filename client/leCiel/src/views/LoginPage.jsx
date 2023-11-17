@@ -32,8 +32,9 @@ const LoginPage = () => {
       const { data } = await server.post('/login', logData);
       localStorage.setItem('access_token', data.token);
       navigate('/');
-    } catch (error) {
-      // setError(error.response.data.message);
+    } catch (err) {
+      setError(err.response.data);
+      console.log(error);
     }
   };
 
@@ -58,7 +59,6 @@ const LoginPage = () => {
       await supabase.auth.signInWithOAuth({
         provider: 'twitter',
         options: {
-          scopes: 'users.read tweet.write',
           redirectTo: 'http://localhost:8080/login',
         },
       });
@@ -71,36 +71,44 @@ const LoginPage = () => {
     try {
       let { data } = await supabase.auth.getSession();
 
+      console.log(data);
+
       setSession(data.session.user);
-
-      if (session) {
-        setTwitterData({
-          email: session.email,
-          username: session.user_metadata.user_name,
-          fullName: session.user_metadata.full_name,
-        });
-
-        const { data } = await server.post('/twitter-auth', twitterData);
-        localStorage.setItem('access_token', data.token);
-        navigate('/');
-      }
     } catch (err) {
       // setError(err);
     }
   };
 
+  const twtData = async () => {
+    try {
+      setTwitterData({
+        email: session.email,
+        username: session.user_metadata.user_name,
+        fullName: session.user_metadata.full_name,
+      });
+
+      const { data } = await server.post('/twitter-auth', twitterData);
+      localStorage.setItem('access_token', data.token);
+      navigate('/');
+    } catch (err) {
+      // console.log(err);
+    }
+  };
+
+  if (session) twtData();
+
   useEffect(() => {
     checkSession();
-  }, [session]);
+  }, []);
 
   return (
     <div className='h-full w-full flex justify-center items-center'>
       <div className='h-[30rem] w-fit flex flex-col items-center justify-center p-10 rounded-md bg-[#2b2b2b]'>
-        {error && <h1 className='text-red-400'>{error.message}</h1>}
         <div className='flex text-[#a970ff] gap-2 text-4xl cursor-default'>
           <SvgComponent />
           <h2 className='text-4xl font-semibold mb-2 text-[#a970ff]'>Login</h2>
         </div>
+        {error && <h1 className='text-red-400'>{error.message}</h1>}
         <form onSubmit={reglogin} className='w-96'>
           <div className='mb-6'>
             <label
